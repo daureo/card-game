@@ -51,6 +51,14 @@ function compareCards(c1, c2){
         p2Score.innerHTML = p2NewScore;
     } else {
         result.innerHTML = "Lets go to WAAAAR!";
+        //For now, WAR will sum 1 point to each player
+        p1NewScore = Number(p1Score.innerHTML);
+        p1NewScore++;
+        p1Score.innerHTML = p1NewScore;
+
+        p2NewScore = Number(p2Score.innerHTML);
+        p2NewScore++;
+        p2Score.innerHTML = p2NewScore;
     }
 }
 
@@ -62,19 +70,20 @@ function drawCard(){
   .then(
       data => {
         console.log(data)
-
-        p1Card.src = data.cards[0].image;
-        p2Card.src = data.cards[1].image;
-        
         if(data.remaining > 0){
+            p1Card.src = data.cards[0].image;
+            p2Card.src = data.cards[1].image;       
+        
             compareCards(data.cards[0], data.cards[1]);
+
         } else {
+            document.querySelector('#gameOver').style.display = 'flex';
             if(p1NewScore > p2NewScore){
-                window.alert("Game over - Player 1 Wins!");
+                document.querySelector('#gameOverP').textContent = "Game over - Player 1 Wins!";
             } else if (p1NewScore < p2NewScore) {
-                window.alert("Game over - Player 2 Wins!");
+                document.querySelector('#gameOverP').textContent = "Game over - Player 2 Wins!";
             } else {
-                window.alert("Game over - Draw Game!");
+                document.querySelector('#gameOverP').textContent = "Game over - Draw Game!";
             }
         }
         
